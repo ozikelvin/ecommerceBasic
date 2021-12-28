@@ -1,0 +1,4 @@
+
+<label for='product' >Select</label>
+
+<input type='text' hidden id='product' />
