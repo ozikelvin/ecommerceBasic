@@ -38,7 +38,7 @@ export const Accessories = ()=>{
             {
                 phones && phones.map(data =>{
                 return   <CustCard key={data?._id} className='col-4 mx-2' onClick={()=> history.push(`/details/${data?._id}`)}  >
-                <img src={data?.image} />
+                <img src={data?.image} alt='.' />
                 <div className='my-3' >
                 <p className='p'>{ data?.description ?? data?.title}</p>
             </div>
