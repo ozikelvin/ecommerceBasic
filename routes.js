@@ -18,6 +18,15 @@ routes.post('/create', createProduct)
 
 // Getting all the products
 
+routes.get('/', (req, res)=>{
+    try{
+
+        res.status(200).json({Message: 'Api is working fine', success:true})
+    }catch(err){
+        res.status(404).json({Message:'There is something wrong with the API please deal'})
+    }
+})
+
 routes.get('/allProduct', getAllProducts)
 
 // Getting a product by id;
