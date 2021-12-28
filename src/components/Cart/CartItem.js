@@ -1,11 +1,13 @@
 import React from 'react'
+import {useItem} from '../../hooks';
 
-export default function CartItem({ item, value }) {
-    const { id, title, image, price, total, count } = item;
-    const { increment, decrement, removeItem } = value;
+
+export default function CartItem({ item }) {
+    const { _id, title, image, price, total, count } = item;
+    const { increment, decrement, removeItem } = useItem();
     return (
         <div className="row my-1 text-capitalize text-center">
-            <div classNAme="col-10 mx-auto col-lg-2">
+            <div className="col-10 mx-auto col-lg-2">
                 <img 
                     src={image}
                     style={{ width: "5rem", height: "5rem" }}
@@ -23,15 +25,15 @@ export default function CartItem({ item, value }) {
             <div className="col-10 mx-auto col-lg-2 my-2 my-lg-0">
                 <div className="d-flex justify-content-center">
                     <div>
-                        <span className="btn btn-black mx-1" onClick={() => decrement(id)}> - </span>
+                        <span className="btn btn-black mx-1" onClick={() => decrement(_id)}> - </span>
                         <span className="btn btn-black mx-1">{count} </span>
-                        <span className="btn btn-black mx-1" onClick={() => increment(id)}> + </span>
+                        <span className="btn btn-black mx-1" onClick={() => increment(_id)}> + </span>
                     </div>
                 </div>
             </div>
             {/* */}
             <div className="col-10 mx-auto col-lg-2">
-                <div className="cart-icon" onClick={() => removeItem(id)}>
+                <div className="cart-icon" onClick={() => removeItem(_id)}>
                     <i className="fas fa-trash" />
                 </div>
             </div>

@@ -1,30 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Product from './Product';
 import Title from "./Title";
-import { ItemConsumer } from "../context";
+import {useItem} from '../hooks';
+import { DashBoardHeader, ProductWrap, Button } from './design.styled';
+import desk  from '../desk.png'
+import { Footer } from './footer';
+import { useHistory } from 'react-router-dom';
 
 
-export default class ProductList extends Component {
+const ProductList  = ()=>{
+
+const { products} = useItem();
+
+const history = useHistory();
+
+    return (
+        <React.Fragment>
     
-    render() {
-        return (
-            <React.Fragment>
-                <div className="py-5">
-                    <div className="container">
-                        <Title name="our" title="Items" />
-                        <div className="row">
-                            <ItemConsumer>
-                                {value => {
-                                        return value.products.map(product =>{
-                                            return <Product key={product.id} product={product} />;
-                                        })
-                                }}
-                            </ItemConsumer>
+            <div className="py-5">
+            
+                <div className="container">
+
+                <section>
+                    <DashBoardHeader className='d-flex' >
+                        <div>
+                        <h4> Gadget Shopping Made Easy </h4>
+                        <p> With Elite Technologies you can make your online gadget shopping easy and fast</p>
+                        <p>
+                        We give extremely clean and durable U.K used gadgets with warranty, brand new phones, computers (laptops and desktops), and accessories with nationwide delivery. 
+
+
+                        </p>
                         </div>
-                    </div>
+                        <div  >
+                            <img style={{marginTop:'65px'}} src={desk} alt='.' />
+                        </div>
+                    </DashBoardHeader>
+                </section>
+                  
+                <div style={{padding:'12px', marginTop:'15px'}} >
+                <Button onClick={()=> history.push('/product')} > Get Started </Button>
                 </div>
-            </React.Fragment>
-                // 
-        )
-    }
+                </div>
+                
+            </div>
+            <Footer />
+        </React.Fragment>
+            // 
+    )
 }
+    
+export default  ProductList;

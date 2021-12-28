@@ -1,31 +1,34 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import {ItemConsumer } from "../context";
 
-export default class Product extends Component {
-    render() {
-			const { id, title, image, price, inCart} = this.props.product;
+import {useItem} from '../hooks';
+
+const Product = (product)=> {
+    
+	const {  handleDetails, addToCart, openModal } = useItem();
+			const { _id, title, image, price, inCart} = product?.product;
+	
+
         return (
-            <ItemWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+            <ItemWrapper className="col-9 col-md-6 col-lg-3 my-3">
                 <div className="card">
-									<ItemConsumer>
-										{value => (
+								
 											<div 
-											className="img-container p-5" 
+											className="img-container p-2" 
 											onClick={() => 
-												value.handleDetails(id)
+												handleDetails(_id)
 											}
 											>
-											<Link to="/details">
+											<Link to={`/details/${_id}`}  >
 												<img src={image} alt="item" className="card-img-top" />
 											</Link>
 											<button 
 												className="cart-btn" 
 												disabled={inCart ? true : false} 
 												onClick={() => {
-													value.addToCart(id);
-													value.openModal(id);
+													addToCart(_id);
+													openModal(_id);
 												}}
 												>
 												{inCart ? (
@@ -38,8 +41,7 @@ export default class Product extends Component {
 													)}
 											</button>
 										</div>
-										)}
-									</ItemConsumer>
+									
 									{/* card footer */}
 									<div className="card-footer d-flex justify-content-between">
 										<p className="align-self-center mb-0">
@@ -52,10 +54,13 @@ export default class Product extends Component {
 								</div> 
             </ItemWrapper>
         );
-    }
+    
 }
  
 const ItemWrapper = styled.div`
+
+	padding:10px;
+
 	.card{
 		border-color: transparent;
 		transition: all 1.5s linear;
@@ -65,6 +70,12 @@ const ItemWrapper = styled.div`
 		border-top: transparent;
 		transition: all 1s linear;
 	}
+
+	img {
+		width:50%;
+		height:50%;
+	}
+
 	&:hover{
 		.card{
 			border: 0.04rem solid rgba(0, 0, 0, 0.2);
@@ -104,3 +115,5 @@ const ItemWrapper = styled.div`
 		cursor: pointer;
 	}
 `
+
+export default Product

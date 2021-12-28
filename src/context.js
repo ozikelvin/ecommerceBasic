@@ -1,153 +1,116 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storeProducts } from "./data";
-const ItemContext = React.createContext();
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { baseUrl } from "./components/env";
 
 
-class ItemProvider extends Component {
-	state ={
-		products: [],
-		detailProduct: storeProducts,
-		cart: [],
-		modalOpen: false,
-		modalProduct: storeProducts,
-		cartSubTotal: 0,
-		cartTax: 0,
-		cartTotal: 0
-	};
-	componentDidMount(){
-		this.setProducts();
-	}
-	setProducts = () =>{
+export const ItemContext = React.createContext();
+
+
+export const ItemProvider = ({children})=> {
+		const [state, setState] = useState({
+			products: [],
+			detailProduct: null,
+			cart: [],
+			modalOpen: false,
+			modalProduct: null,
+			cartSubTotal: 0,
+			cartTax: 0,
+			cartTotal: 0
+		}
+		)
+	const setProducts = () =>{
 		let tempProducts = [];
 		storeProducts.forEach(item =>{
 			const singleItem = {...item};
 			tempProducts = [...tempProducts,singleItem];
 		});
-		this.setState(() =>{
+		setState(() =>{
 			return{ products: tempProducts };
 		});
 	};
 
-	getItem = id =>{
-		const product = this.state.products.find(item => item.id === id);
+	
+
+	const getItem = id =>{
+		const product = state.products.find(item => item._id === id);
 		return product;
 	};
 
-	handleDetails = id => {
-		const product = this.getItem(id);
-		this.setState(() => {
+	const handleDetails = id => {
+		const product = getItem(id);
+		setState(() => {
 		return { detailProduct: product };
 		});
 	};
-	addToCart = id =>{
-		let tempProducts = [...this.state.products];
-		const index = tempProducts.indexOf(this.getItem(id));
-		const product = tempProducts[index];
-		product.inCart = true;
-		product.count = 1;
-		const price = product.price;
-		product.total = price;
-		this.setState(() => {
-			return { products: tempProducts, cart: [...this.state.cart, product] };
-		},
-		() => {
-			this.addTotals();
-		});
+	const addToCart = async(id )=> {
+
+	
+		try{
+			let res = await axios.get(`${baseUrl}/add/${id}`);
+		
+			toast.success(res?.data?.message ?? 'Successfully added to cart')
+			window.open(`/details/${id}`, '_self')
+		}catch (err){
+			toast.error(err?.message ?? err?.response?.message)
+		}
+		
+	
 	};
-	openModal = id => {
-		const product = this.getItem(id);
-		this.setState(() => {
+	 const openModal = id => {
+		const product = getItem(id);
+		setState(() => {
 			return {modalProduct: product, modalOpen: true}
 		})
 	}
-	closeModal = () => {
-		this.setState(() => {
+	 const closeModal = () => {
+		 setState(() => {
 			return {modalOpen: false}
 		});
 	};
-	increment = id => {
-		let tempCart = [...this.state.cart];
-		const selectedProduct = tempCart.find(item => item.id === id);
-
-		const index = tempCart.indexOf(selectedProduct);
-		const product = tempCart[index];
-
-		product.count = product.count + 1;
-		product.total = product.count * product.price;
-
-		this.setState(
-			() => {
-				return { cart: [...tempCart] };
-			},
-			() => {
-				this.addTotals();
-			}
-		);
+	 const increment = async(id) => {
+		const res = await axios.get(`${baseUrl}/increase/${id}`);
+		toast.success(res?.data?.message);
+		window.open('/cart', '_self')
 	};
-	decrement = id => {
-		let tempCart = [...this.state.cart];
-		const selectedProduct = tempCart.find(item => item.id === id);
-
-		const index = tempCart.indexOf(selectedProduct);
-		const product = tempCart[index];
-		product.count = product.count -1;
-
-		if (product.count === 0) {
-			this.removeItem(id);
-		} else {
-			product.total = product.count * product.price;
-			this.setState(
-				() => {
-					return { cart: [...tempCart] };
-				},
-				() => {
-					this.addTotals();
-				}
-			);
+	 const decrement = async(id) => {
+	
+		const res = await axios.get(`${baseUrl}/decrease/${id}`);
+		if(res?.data?.data?.count === 0){
+			removeItem(id)
+		}else {
+			toast.success(res?.data?.message);
+			window.open('/cart', '_self')
 		}
+	
+
+	
 	};
-	removeItem = id => {
-		let tempProducts = [...this.state.products];
-		let tempCart = [...this.state.cart];
-
-		tempCart = tempCart.filter(item => item.id !== id);
-
-		const index = tempProducts.indexOf(this.getItem(id));
-		let removedProduct = tempProducts[index];
-		removedProduct.inCart = false;
-		removedProduct.count = 0;
-		removedProduct.total = 0;
-
-		this.setState(
-			() => {
-				return {
-					cart: [...tempCart],
-					products: [...tempProducts]
-				};
-			},
-			() => {
-				this.addTotals();
-			}
-		);
+	 const removeItem = async(id) => {
+		const res = await axios.get(`${baseUrl}/remove/${id}`);
+		
+		toast.success(res?.data?.message);
+		window.open('/cart', '_self')
 	};
-	clearCart = () => {
-		 this.setState(
+	 const clearCart = () => {
+		 setState(
 			 () => {
 				 return { cart: [] };
 			 },
 			 () => {
-				 this.setProducts();
-				 this.addTotals();
+				 setProducts();
+				 addTotals();
 			 }
 		 );
 	};
-	addTotals = () => {
+	 const addTotals = () => {
 		let subTotal = 0;
-		this.state.cart.map(item => (subTotal += item.total));
+		state.cart.map(item => (subTotal += item.total));
 		const tempTax = subTotal * 0.1;
 		const tax = parseFloat(tempTax.toFixed(2));
 		const total = subTotal + tax;
-		this.setState(() => {
+		setState(() => {
 			return {
 				cartSubTotal: subTotal,
 				cartTax: tax,
@@ -156,27 +119,43 @@ class ItemProvider extends Component {
 		});
 	};
 
-    render() {
+	const fetchData = async()=>{
+		const res = await axios.get(`${baseUrl}/allProduct`);
+		const productIncart = res?.data?.products.filter(item => item.inCart === true);
+		
+		setState(()=>{
+			return { products: res?.data?.products, detailProduct: res?.data?.products, modalProduct:res?.data?.products, cart:productIncart }
+		})
+	
+	}
+	
+	
+	
+		useEffect( ()=>{
+			fetchData()
+
+		}, [])
+
         return (
             <ItemContext.Provider value={{
-														...this.state,
-														handleDetails: this.handleDetails,
-														addToCart: this.addToCart,
-														openModal: this.openModal,
-														closeModal: this.closeModal,
-														increment: this.increment,
-														decrement: this.decrement,
-														removeItem: this.removeItem,
-														clearCart: this.clearCart
+														...state,
+														handleDetails: handleDetails,
+														addToCart: addToCart,
+														openModal: openModal,
+														closeModal: closeModal,
+														increment: increment,
+														decrement: decrement,
+														removeItem: removeItem,
+														clearCart:clearCart
 
 												}}
 												>
-													{this.props.children}
+													{children}
 												</ItemContext.Provider>
         )
     }
-}
 
-const ItemConsumer = ItemContext.Consumer;
 
-export { ItemProvider, ItemConsumer };
+export  const ItemConsumer = ItemContext.Consumer;
+
+

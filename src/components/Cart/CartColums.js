@@ -1,8 +1,10 @@
 import React from 'react'
+import styled from 'styled-components/macro';
+
 
 export default function CartColums() {
     return (
-        <div className="container-fluid text-center d-none d-lg-block">
+        <Wrapper className="container-fluid text-center d-none d-lg-block mb-5">
             <div className="row">
 
                 <div className="col-10 mx-auto col-lg-2">
@@ -25,6 +27,17 @@ export default function CartColums() {
                 </div>
 
             </div>
-        </div>
+        </Wrapper>
     )
 }
+
+
+const Wrapper = styled.div`
+padding:19px;
+width:70%;
+border-radius:10px;
+background:#000;
+font-weight:700;
+color:#fff;
+
+`

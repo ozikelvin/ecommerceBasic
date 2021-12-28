@@ -1,33 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Title from "../Title";
 import CartColums from "./CartColums";
 import EmptyCart from "./EmptyCart";
-import { ItemConsumer } from "../../context";
+import { useHistory } from 'react-router-dom';
 import CartList from "./CartList";
 import CartTotals from './CartTotals';
+import {useItem} from '../../hooks';
+import axios from 'axios';
 
-export default class Cart extends Component {
-    render() {
-        return (
-            <section>
-                <ItemConsumer>
-                    {value =>{
-                        const {cart} = value;
-                        if(cart.length > 0){
+
+const  Cart = ()=> {
+   
+    const { cart } = useItem();
+
+  
+   
+    
+    const history = useHistory();
+              
+                       
+                        if(cart !== null){
                             return (
-                                <React.Fragment>
+                                <div style={{marginLeft:'1rem'}}>
                                 <Title name="your" title="cart" />
                                 <CartColums />
-                                <CartList value={value} />
-                                <CartTotals value={value} history={this.props.history} />
-                                </React.Fragment>
+                               <CartList value={cart}  /> 
+                              <CartTotals value={cart} history={history} /> 
+                                </div>
                             );
                         } else {
                             return <EmptyCart />;
                         }
-                    }}
-                </ItemConsumer>
-            </section>
-        );
-    }
+            
+    
 }
+
+export default Cart;

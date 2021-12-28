@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { ItemConsumer } from '../context';
 import { ButtonContainer } from './Button';
 import { Link } from "react-router-dom";
+import {useItem} from '../hooks';
 
-export default class Modal extends Component {
-    render() {
-        return (
-            <ItemConsumer>
-            {(value) => {
-                const { modalOpen, closeModal } = value;
-                const {image, title, price } = value.modalProduct;
+const Modal = ()=> {
+
+    const { modalProduct, modalOpen, closeModal } = useItem();
+    const {image, title, price } = modalProduct;
+    
 
                 if(!modalOpen){
                 return null;
                 }
                 else{
-									return (
+							return (
                     <ModalContainer>
                     <div className="container">
                         <div className="row">
 													<div id="modal" className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5">
 														<h5>item added to the cart</h5>
-														<img src={image} className="img-fluid" alt="product" />
+										 				<img src={image} className="img-fluid" alt="product" />
 														<h5>{title} </h5>
 														<h5 className="text-muted">price: ${price} </h5>
 														<Link to='/'>
@@ -41,10 +39,7 @@ export default class Modal extends Component {
                     </ModalContainer>
 									);
                 }
-            }}
-            </ItemConsumer>
-        );
-    }
+
 }
 
 const ModalContainer = styled.div`
@@ -61,3 +56,5 @@ justify-content: center;
 	background: var(--mainWhite);
 }
 `;
+
+export default Modal;
