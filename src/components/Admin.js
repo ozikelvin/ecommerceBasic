@@ -109,7 +109,7 @@ export const Admin = ()=>{
                 </div>
                 <div className='col-6 form-group' >
                 <div><label className='mb-3'  > Selected Product view </label></div>
-                { imge && ( <img src={imge} style={{width:'130px', height:'130px', borderRadius:'60px', marginTop:'6%', marginLeft:'3rem'}} className="border img-thumbnail rounded-circle"  /> ) }
+                { imge && ( <img src={imge} alt='.' style={{width:'130px', height:'130px', borderRadius:'60px', marginTop:'6%', marginLeft:'3rem'}} className="border img-thumbnail rounded-circle"  /> ) }
                 </div>
                 <div className='col-6 form-group' >
                 <label > Select Product Color </label>

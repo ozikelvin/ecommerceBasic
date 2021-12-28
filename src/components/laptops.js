@@ -2,9 +2,8 @@ import { useState, useEffect , useCallback } from "react";
 import { Footer } from './footer';
 import Title from "./Title";
 import axios from 'axios';
-import {useItem} from '../hooks';
 import { CustCard  } from './design.styled';
-import desk  from '../desktop.jpg';
+
 import { useHistory } from 'react-router-dom';
 import { baseUrl } from "./env";
 
@@ -25,7 +24,7 @@ export const Laptops = ()=>{
         useEffect(()=>{
             fetchData()
           
-        }, [])
+        }, [fetchData])
 
 
 
@@ -38,7 +37,7 @@ export const Laptops = ()=>{
             {
                 phones && phones.map(data =>{
                 return   <CustCard key={data?._id} className='col-4 mx-2' onClick={()=> history.push(`/details/${data?._id}`)}  >
-                <img src={data?.image} />
+                <img src={data?.image} alt='.' />
                 <div className='my-3' >
                 <p className='p'>{ data?.description ?? data?.title}</p>
             </div>

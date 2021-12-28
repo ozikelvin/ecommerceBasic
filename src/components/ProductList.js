@@ -1,8 +1,5 @@
 import React from 'react';
-import Product from './Product';
-import Title from "./Title";
-import {useItem} from '../hooks';
-import { DashBoardHeader, ProductWrap, Button } from './design.styled';
+import { DashBoardHeader,  Button } from './design.styled';
 import desk  from '../desk.png'
 import { Footer } from './footer';
 import { useHistory } from 'react-router-dom';
@@ -10,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 const ProductList  = ()=>{
 
-const { products} = useItem();
+
 
 const history = useHistory();
 

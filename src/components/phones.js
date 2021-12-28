@@ -23,7 +23,7 @@ export const Phones = ()=>{
         useEffect(()=>{
             fetchData()
           
-        }, [])
+        }, [fetchData])
 
 
 

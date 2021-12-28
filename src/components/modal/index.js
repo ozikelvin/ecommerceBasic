@@ -3,7 +3,7 @@ import Close from "../Close.svg";
 import {CustomModal, ModalWrapper,
    CloseModal, ModalHeader
   } from './modal.styled';
-  import logo from "../../lgo.jpeg";
+
 
 
 

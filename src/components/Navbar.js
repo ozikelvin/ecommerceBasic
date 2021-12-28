@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+
 import logo from "../lgo.jpeg";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";

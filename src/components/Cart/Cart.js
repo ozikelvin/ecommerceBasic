@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import CartList from "./CartList";
 import CartTotals from './CartTotals';
 import {useItem} from '../../hooks';
-import axios from 'axios';
+
 
 
 const  Cart = ()=> {

@@ -2,7 +2,7 @@ import { useState, useEffect , useCallback } from "react";
 import { Footer } from './footer';
 import Title from "./Title";
 import axios from 'axios';
-import {useItem} from '../hooks';
+
 import { CustCard  } from './design.styled';
 import { baseUrl } from "./env";
 import { useHistory } from 'react-router-dom';
@@ -25,7 +25,7 @@ export const Accessories = ()=>{
         useEffect(()=>{
             fetchData()
           
-        }, [])
+        }, [fetchData])
 
 
 

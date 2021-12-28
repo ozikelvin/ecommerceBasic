@@ -1,8 +1,4 @@
 import './cat.css';
-import iphone from '../iphone.jpg';
-import laptop from '../laptop.jpg';
-import destop from '../desktop.jpg';
-import ear from '../ear.jpg';
 import { Catego } from './design.styled';
 import { Footer } from './footer';
 import { useHistory } from 'react-router-dom';
