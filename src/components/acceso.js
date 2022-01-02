@@ -24,7 +24,7 @@ export const Accessories = ()=>{
 
         useEffect(()=>{
             fetchData()
-          
+           
         }, [fetchData])
 
 

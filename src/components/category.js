@@ -16,7 +16,7 @@ export const Category = () =>{
                <div className='col-6'>
                <h5> Product Categories </h5>
                 <p>
-                    Make your gadget shopping easy by ordering from Elite Technology
+                    Make your gadget shopping easy by ordering from Elite Technologies.
                 </p>
                 <p>Shop your Laptops, Phones , Accessories , Desktops and other electronic gadget here..</p>
                 <p> Brand new and extremely clean U.K used gadget available, with warranty   </p>
