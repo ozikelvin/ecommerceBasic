@@ -187,9 +187,7 @@ export const CustCard = styled.div`
 background:#fff;
 border-radius:10px;
 box-shadow: 0px 4px 18px -2px #768798;
-width:20%;
 
-padding:15px 15px;
 
 
 img {

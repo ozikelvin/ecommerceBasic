@@ -5,7 +5,8 @@ import {useItem} from '../hooks';
 import axios from 'axios';
 import { DetailWrapper  } from './design.styled';
 import { Footer } from './footer';
-
+import toast from 'react-hot-toast';
+import { baseUrl } from "./env";
 
 const  Details = ()=> {
 	const {  addToCart, openModal } = useItem();
@@ -16,8 +17,14 @@ const  Details = ()=> {
 
 				const fetchInfo = useCallback(
 					async() =>{
-						const info = await axios.get(`http://localhost:3005/getProduct/${id}`);
-						setParticularProduct(info?.data?.data);
+							try{
+								const info = await axios.get(`${baseUrl}/getProduct/${id}`);
+								setParticularProduct(info?.data?.data);
+								console.log(info?.data)
+							}catch(err){
+								console.log(err?.response?.data)
+								toast.error(err?.response?.data?.message)
+							}
 						}, [id]
 				)
 

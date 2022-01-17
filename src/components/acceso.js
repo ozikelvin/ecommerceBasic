@@ -37,22 +37,28 @@ export const Accessories = ()=>{
 
             {
                 phones && phones.map(data =>{
-                return   <CustCard key={data?._id} className='col-4 mx-2' onClick={()=> history.push(`/details/${data?._id}`)}  >
+                return  <CustCard key={data?._id} className='col-2 mx-2 pt-3 pb-0 px-2' onClick={()=> history.push(`/details/${data?._id}`)}  >
                 <img src={data?.image} alt='.' />
                 <div className='my-3' >
                 <p className='p'>{ data?.description ?? data?.title}</p>
             </div>
-            <div className='my-2 d-flex justify-content-center' >
+            <div className='my-2 d-flex justify-content-between' >
             <div className='d-flex my-2' >
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
             <span className="fa fa-star checked"></span>
             <span className="fa fa-star "></span>
             </div>
-            <div className='mx-3 ' >
+
+                    <div>
+                        <span className='span' > {data?.color ?? ''} </span>
+                    </div>
+
+            <div className='mx-2' >
                 <span className='span text-nowrap' >&#x20A6; { data?.price} </span>
              </div>
             </div>
+            <div className="d-flex justify-content-center" >
+                 <p style={{color:"#023498",  cursor:" pointer !important"}} > View more</p>
+             </div>
             </CustCard>
                 })
             }
