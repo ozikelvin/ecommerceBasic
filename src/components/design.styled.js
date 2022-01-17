@@ -232,7 +232,7 @@ h2 {
 }
 
 h4 {
-    color:#867200; 
+    color:#fff; 
 }
 h1 {
     color:#fff; 
@@ -242,8 +242,8 @@ span {
 }
 
 img {
-    width:270px;
-    height:230px;
+    width:170px;
+    height:170px;
     border-radius:10px;
    
 }
